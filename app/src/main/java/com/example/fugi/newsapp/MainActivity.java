@@ -1,5 +1,7 @@
 package com.example.fugi.newsapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,12 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int item_id = item.getItemId();
+        
 
-        if(item_id == R.id.app_bar_search){
-            getNews task = new getNews();
-            task.execute();
-        }
         return true;
     }
 
@@ -53,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         rv = (RecyclerView)findViewById(R.id.recyclerView);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
+
+        getNews task = new getNews();
+        task.execute();
     }
 
     private class getNews extends AsyncTask<Object, Object, ArrayList<NewsItem>> {
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<NewsItem> data) {
+        protected void onPostExecute(final ArrayList<NewsItem> data) {
             super.onPostExecute(data);
             progressBar.setVisibility(GONE);
             if(data != null) {
@@ -84,7 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onItemClick(int clickedItemIndex) {
-
+                        Uri uri = Uri.parse(data.get(clickedItemIndex).getUrl());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
                     }
                 });
 
