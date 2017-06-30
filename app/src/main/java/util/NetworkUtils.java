@@ -27,7 +27,7 @@ public class NetworkUtils {
         Uri builtUri = Uri.parse(base_url).buildUpon()
                 .appendQueryParameter(query_source,"the-next-web")
                 .appendQueryParameter(query_sort,"latest")
-                .appendQueryParameter(query_apikey,"01a1f76f442845d483948bc63e3adabf")
+                .appendQueryParameter(query_apikey,"INSERT APIKEY HERE")
                 .build();
 
         URL url = null;
